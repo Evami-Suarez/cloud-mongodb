@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 router.get('/', async (req,res) => {
     try{
-        const userSchema = await userSchema.find()
+        const userSchema = await User.find()
         res.status(200).json(userSchema)
     } catch(error) {
        res.send(`Some error occured => ${error}`)
@@ -14,15 +14,10 @@ router.get('/', async (req,res) => {
 
 router.post('/', async (req, res) => {
     console.log(req.body);
-    const newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        number: req.body.number,
-        age: req.body.age,
-        birthday: req.body.birthday
-    });
+    const newUser = new User(req.body);
     try{
-        const result = await userSchema.save();
+        
+        const result = await newUser.save();
         res.status(201).json(result);
     }catch(error) {
         res.send(`Some error occured => ${error}`)
